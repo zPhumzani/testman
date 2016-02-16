@@ -1,0 +1,13 @@
+%h1 Users
+
+%ul
+  - @users.find_each do |user| 
+    %li
+      %strong
+        = user
+      - unless current_user == user 
+        = button_to 'Send message', new_mailboxer_conversation_path(user), class: 'btn btn-default'
+
+= will_paginate @users
+
+

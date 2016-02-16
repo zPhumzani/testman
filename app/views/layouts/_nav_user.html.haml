@@ -1,0 +1,19 @@
+%ul.nav.navbar-nav
+  %li= link_to "Home", home_path
+  -#%li= link_to "Explora", explora_path
+%ul.nav.navbar-nav.navbar-right
+  %li= link_to 'Mailbox', mailboxes_path, class: 'fa fa-inbox'
+  %li.dropdown
+    %a#dropdownMenu{ href: user_path(current_user), class:'dropdown-toggle fa fa-user', data: {toggle: 'dropdown'}}
+      %i.gyphicon= current_user
+      %b.caret
+    %ul.dropdown-menu{ role: "menu", aria: {labelledby: "dropdownMenu"}}
+      %li= link_to "Profile", user_path(current_user)
+      %li= link_to "Help", '#'
+      %li= link_to "Edit Profile", edit_user_registration_path
+      %li.divider
+      %li= link_to "logout", destroy_user_session_path, method: :delete
+%form.navbar-form.pull-right
+  .group-form
+    %input.search-query{ type: "text", placeholder: "Search", class: 'form-control'}
+    %button{ type: "submit", class: 'btn btn-default'} search

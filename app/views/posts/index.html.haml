@@ -1,0 +1,25 @@
+.page-header
+  %h1 Home
+
+.row
+  .col-sm-3
+    .panel.panel-default
+      .panel-body
+        = render 'text_posts/form'
+  .col-sm-6
+    .panel.panel-default
+      .panel-heading
+        %h3 Recent Posts
+      .panel-body
+        = render @posts
+  .col-sm-3
+    .panel.panel-default
+      .panel-body
+        About
+
+  .col-sm-3
+    .panel.panel-default
+      .panel-body
+        Trends
+
+= will_paginate @posts

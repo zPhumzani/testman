@@ -1,0 +1,14 @@
+.page-header
+  %h1 Post
+
+= render @post
+
+= link_to "Home", posts_path, class: "btn btn-default btn-sm"
+
+%h3 Comments
+
+= render @post.comments
+
+%h4 New Comment
+
+= render 'comments/form'

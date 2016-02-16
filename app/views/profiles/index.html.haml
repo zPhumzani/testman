@@ -1,0 +1,37 @@
+%h1 Listing profiles
+
+%table
+  %thead
+    %tr
+      %th Date of birth
+      %th Location
+      %th Languages
+      %th Bio
+      %th Favorite qoutes
+      %th Interest
+      %th Favorite movies
+      %th Favorite music
+      %th Title
+      %th
+      %th
+      %th
+
+  %tbody
+    - @profiles.each do |profile|
+      %tr
+        %td= profile.date_of_birth
+        %td= profile.location
+        %td= profile.languages
+        %td= profile.bio
+        %td= profile.favorite_qoutes
+        %td= profile.interest
+        %td= profile.favorite_movies
+        %td= profile.favorite_music
+        %td= profile.title
+        %td= link_to 'Show', profile
+        %td= link_to 'Edit', edit_profile_path(profile)
+        %td= link_to 'Destroy', profile, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Profile', new_profile_path

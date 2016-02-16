@@ -1,0 +1,4 @@
+- if @trash
+  %p= link_to 'Empty Trash', empty_trash_mailboxer_conversations_path, class: 'btn btn-danger', data: { confirm: 'Are your sure?'}
+
+= render 'conversation', conversations: @trash

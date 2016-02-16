@@ -1,0 +1,6 @@
+.article 
+  = simple_form_for @text_post do |f|
+    = f.input :body, label: false
+    .group-btn
+      = f.submit 'Text', class: 'btn btn-primary btn-xs'
+      = link_to "Image", new_image_post_path, class: 'btn btn-success btn-xs' 

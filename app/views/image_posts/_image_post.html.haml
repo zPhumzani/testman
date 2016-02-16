@@ -1,0 +1,19 @@
+.well
+  .media
+    .media-left
+      - if image_post.user.photos.present?
+        = link_to image_tag(image_post.user.photos.last.image.url(:thumb), width: 64, class: 'img-rounded'), '#'
+      - else
+        = image_tag('anon.png', width: 64)
+    .media-body
+      .media-heading
+        %h4= link_to image_post.user, user_path(image_post.user)
+
+      %p= image_post.body
+      %span.thumbnail
+        = image_tag image_post.image.url(:medium), class: "img-responsive img-rounded" 
+
+  %hr
+    = pluralize image_post.cached_comment_count, "Comment"
+    - if image_post.user == current_user 
+      %span.pull-right= link_to 'Edit', edit_image_post_path(image_post), class: 'btn btn-sm btn-default'

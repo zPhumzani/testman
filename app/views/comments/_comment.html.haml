@@ -1,0 +1,5 @@
+%blockquote
+  %small= " #{comment.user} said"
+  %p= comment.body
+  - if @can_modetate
+    %p= link_to 'Destroy', comment_path(comment), method: :delete, class: "btn btn-default"

@@ -1,0 +1,99 @@
+!!!
+%html
+  %head
+    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0"}
+    %title= content_for?(:title) ? yield(:title) : 'Palsmaker'
+    %meta{:name => "description", :content => "#{content_for?(:description) ? yield(:description) : 'Palsmaker'}"}
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body
+    %header
+      = render 'layouts/navigation'
+    .row.wrapper
+      .col-md-12
+        #myCarousel.carousel.slide{ data: {interval: 10000, ride: 'carousel'}}
+          %ol.carousel-indicators
+            %li.active{ data: {target: "#myCarousel", slide: {to: '0'}}}
+            %li{ data: {target: "#myCarousel", slide: {to: '1'}}}
+            %li{ data: {target: "#myCarousel", slide: {to: '2'}}}
+
+          .carousel-inner{ role: "listbox"}
+            .active.item
+              = image_tag('anon.png', alt: 'Packt', class: 'first-slide')
+              .container
+                .carousel-caption
+                  %h6 Major the best
+            .item
+              = image_tag('a31_001.jpg', alt: 'Packt')
+              .conatiner
+                .carousel-caption
+                  %h6 Major the best
+            .item
+              = image_tag('Avengers.jpg', alt: 'Packt')
+              .container
+                .carousel-caption
+                  %h6 Major the best
+
+            %a{href: "#myCarousel", class: 'carousel-control left', data: {slide: 'prev'}}
+            %a{href: "#myCarousel", class: 'carousel-control right', data: {slide: 'next'}}
+
+      .col-md-12
+        .profile_pic
+          - if @user.photos.present?
+            = image_tag @user.photos.last.image.url(:medium), class: 'thumbnail'
+          - else
+            = image_tag('anon.png', width: 120)
+            
+    .row.clearfix
+      %ul.nav.nav-tabs.nav-justified
+        %li= link_to 'Posts', user_path(@user)
+        %li= link_to 'View Profile', user_profile_path(@user, @user.profile)
+        %li= link_to 'Photo', user_photo_path(@user, @user.photos)
+        %li= link_to 'Following', '#'
+        %li= link_to 'Followers', '#'
+
+
+
+    %main.clearfix{:role => "main"}
+      = render 'layouts/messages'
+
+      .row
+        .col-sm-3
+          .panel.panel-default
+            .panel-body
+              %h2
+                = @user 
+              - if current_user and current_user == @user
+                = link_to 'Edit Profile Picture', new_user_photo_path(@user), class: 'btn btn-sm btn-warning'          
+              - if user_signed_in?
+                - unless current_user == @user 
+                  = link_to 'Send message', new_mailboxer_conversation_path(to: @user.id), class: 'btn btn-default'
+                - if current_user and @user != current_user
+                  - if current_user.following? @user
+                    = button_to 'Unfollow', unfollow_user_path(@user), class: "btn btn-danger", method: :delete
+                  - else
+                    = button_to "Follow", follow_user_path(@user), class: "btn btn-default"
+
+              %h5
+                %a{ href: '#', class: 'btn btn-info'}
+                  %span.badge= @user.followers.count 
+                  followers
+                %a{ href: '#', class: 'btn btn-danger pull-right'}
+                  following 
+                  %span.badge= @user.leaders.count
+              = render 'text_posts/form'
+        .col-sm-6
+          .panel.panel-default
+            .panel-heading
+              %h3 Recent Posts
+            .panel-body
+              = yield
+        .col-sm-3
+          .panel.panel-default
+            .panel-body
+              About
+        .col-sm-3
+          .panel.panel-default
+            .panel-body
+              Trends

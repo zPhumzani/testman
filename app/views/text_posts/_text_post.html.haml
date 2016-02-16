@@ -1,0 +1,20 @@
+
+.well
+  .media
+    .media-left
+      - if text_post.user.photos.present?
+        = link_to image_tag(text_post.user.photos.last.image.url(:thumb), width: 64, height: 64, class: 'img-circle'), '#'
+      - else
+        = image_tag('anon.png', width: 64, height: 64)
+    .media-body
+      .media-heading
+        %h4= link_to text_post.user, user_path(text_post.user)
+
+      %p= text_post.body 
+      %p.text-muted= time_ago_in_words(text_post.created_at)
+
+  %hr      
+  - if text_post.user == current_user
+    %p
+      = pluralize text_post.cached_comment_count, "Comment"
+      %span.pull-right= link_to 'Edit', edit_text_post_path(text_post), class: 'btn btn-default btn-sm'
